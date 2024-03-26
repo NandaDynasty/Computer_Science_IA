@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Administration Page</title>
+    <div class="menu"><a href="/logout">Log Out</a></div>
+    <div class="menu"><a href="adminprofile">My Account</a></div>
+    <div class="menu"><a href="newitem">New Product</a></div>
+    <div class="menu"><a href="deleteitem">Delete Product</a></div>
+    <div class="menu"><a href="addingredient">Add Ingredient</a></div>
+    <div class="menu" id="title"><h1>Isira</h1></div>
+    <a href="{{ url_for('static', filename='isira.jpeg') }}"><img src="{{ url_for('static', filename='isira.jpeg') }}" alt="Logo" width="75px" height="75px"></a>
+    <style>
+        body {
+            background-image: url('{{url_for('static', filename='bgimg.jpg')}}');
+        }
+
+        #inv {
+            background-color: black;
+            color:white;
+            width: 300px;
+            height: 300px;
+            margin-left: 50px;
+            font-size: 40px;
+            border-radius: 50%;
+            float:left;
+            position: absolute;
+            margin-top:150px;
+        }
+
+        #mrev {
+            background-color: black;
+            color:white;
+            width: 300px;
+            height: 300px;
+            font-size: 40px;
+            border-radius: 50%;
+            float:left;
+            position: absolute;
+            margin-top:150px;
+            margin-left: 800px;
+        }
+
+        #order {
+            background-color: black;
+            color:white;
+            width: 300px;
+            height: 300px;
+            font-size: 40px;
+            border-radius: 50%;
+            float:left;
+            position: absolute;
+            margin-top:150px;
+            margin-left:425px;
+        }
+
+        #title {
+            margin-right: 300px;
+            margin-top: 0px;
+            color:black;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+        }
+
+        .menu {
+            float:right;
+            margin:20px;
+        }
+
+
+
+        a{
+            color:black;
+            text-decoration:none;
+
+        }
+
+        a:hover{
+            text-decoration:underline;
+        }
+
+        #logo {
+            height: 75px;
+            width: 75px;
+            float:left;
+        }
+    </style>
+</head>
+<body>
+    <a href="stock">
+        <button type="button" id="inv">Inventory</button>
+    </a>
+    <a href="adminorders">
+        <button type="button" id="order">Orders</button>
+    </a>
+    <a href="monthlyrevenue">
+        <button type="button" id="mrev">Monthly Revenue</button>
+    </a>
+</body>
+</html>

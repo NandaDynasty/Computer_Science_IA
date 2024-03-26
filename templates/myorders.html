@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            background-image: url('{{url_for('static', filename='bgimg.jpg')}}');
+        }
+
+        .menu {
+            float:right;
+            margin:20px;
+        }
+
+        a {
+            color: black;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        #logo {
+            height: 75px;
+            width: 75px;
+            float:left;
+            clear:both;
+        }
+
+        #title {
+            margin-right: 350px;
+            margin-top: 0px;
+            color: black;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+        }
+
+        #orderdisplay {
+            position: absolute;
+            margin-top: 30px;
+            width: 100%;
+        }
+
+        th {
+            background-color: blue;
+            border: 1px solid;
+            color: white;
+            text-align: center;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 125%;
+        }
+
+        td {
+            border: 1px solid;
+            text-align: center;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 125%;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="menu"><a href="/profile">Back</a></div>
+        <div class="menu" id="title"><h1>Isira</h1></div>
+        <a href="{{ url_for('static', filename='isira.jpeg') }}"><img src="{{ url_for('static', filename='isira.jpeg') }}" alt="Logo" width="75px" height="75px"></a>
+    </div>
+    <div style="text-align:center">
+        <p style="font-size:200%;font-family: 'Courier New', Courier, monospace;">My Orders</p>
+    </div>
+    <div>
+        <table id="userorderdisplay" style="width:100%">
+            <thead>
+                <th>Order ID</th>
+                <th>Product Name(s)</th>
+                <th>Quantity</th>
+                <th>Date of Order</th>
+                <th>Status</th>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+    <script>
+        async function updateUserOrdersTable() {
+            const response = await fetch('/get_user_orders_data', {
+                credentials: 'include',  // This ensures cookies are sent.
+            });
+
+            const data = await response.json();
+
+            const tableBody = document.querySelector('#userorderdisplay tbody');
+            tableBody.innerHTML = '';
+
+            data.forEach(order => {
+                const row = tableBody.insertRow();
+
+                const orderIdCell = row.insertCell();
+                orderIdCell.textContent = order.order_id;
+
+                const productNameCell = row.insertCell();
+                productNameCell.textContent = order.product_name;
+
+                const quantityCell = row.insertCell();
+                quantityCell.textContent = order.quantity;
+
+                const dateOfOrderCell = row.insertCell();
+                dateOfOrderCell.textContent = order.date_of_order;
+
+                const statusCell = row.insertCell();
+                statusCell.textContent = order.status;
+            });
+        }
+
+        updateUserOrdersTable();
+    </script>
+</body>
+</html>

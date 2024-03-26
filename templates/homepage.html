@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Welcome to Isira!</title>
+        <a href="{{ url_for('static', filename='isira.jpeg') }}"><img src="{{ url_for('static', filename='isira.jpeg') }}" alt="Logo" width="75px" height="75px"></a>
+    </head>
+    <body style="background-image:url('{{url_for('static', filename='homebackground.jpg')}}'); background-repeat:no-repeat; background-size:cover">
+        <div style="width:100%;text-align:center; margin-top:100px;color:white"><h1>Welcome to Isira! Please log in or sign up to continue</h1></div>
+        <a href="/login"><button style="width:160px;height:70px;background-color:blue;color:white;margin-left:40%">Log In</button></a>
+        <a href="/signup"><button style="width:160px;height:70px;background-color:blue;color:white">Sign Up</button></a>
+    </body>
+</html>

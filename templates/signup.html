@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        body {
+            background-color: purple;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .signup-box {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            width: 80%; /* Adjust the width as needed */
+            max-width: 400px; /* Limit the maximum width */
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .signup-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .login-link {
+            text-decoration: none;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-box">
+        <h2>Sign Up</h2>
+        <form method="post" action="/signup" onsubmit="return validateForm();">
+            <input type="text" name="first-name" placeholder="First Name" required>
+            <input type="text" name="last-name" placeholder="Last Name" required>
+            <input type="text" name="address" placeholder="Address" required>
+            <input type="tel" name="phone-number" placeholder="Phone Number" required>
+            <input type="email" name="email" placeholder="Email Address" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="password" name="confirm-password" placeholder="Confirm Password" required>
+            <button class="signup-button" type="submit">Sign Up</button>
+        </form>
+        <p>Already have an account? <a class="login-link" href="/login">Log In</a></p>
+        <p><a class="login-link" href="/adminlogin">I am an admin</a></p>
+    </div>
+
+    <script>
+        function validateForm() {
+            var firstName = document.querySelector('input[name="first-name"]').value;
+            var lastName = document.querySelector('input[name="last-name"]').value;
+            var address = document.querySelector('input[name="address"]').value;
+            var phoneNumber = document.querySelector('input[name="phone-number"]').value;
+            var email = document.querySelector('input[name="email"]').value;
+            var password = document.querySelector('input[name="password"]').value;
+            var confirmPassword = document.querySelector('input[name="confirm-password"]').value;
+
+            if (firstName === '' || lastName === '' || address === '' || phoneNumber === '' || email === '' || password === '' || confirmPassword === '') {
+                alert('Please fill in all required fields.');
+                return false;
+            }
+
+            if (!isValidEmail(email)) {
+                alert('Please enter a valid email address.');
+                return false;
+            }
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match.');
+                return false;
+            }
+
+            return true;
+        }
+
+        function isValidEmail(email) {
+            var emailPattern = /^\S+@\S+\.\S+$/;
+            return emailPattern.test(email);
+        }
+    </script>
+</body>
+</html>
+
+

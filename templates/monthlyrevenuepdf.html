@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Monthly Revenue PDF</title>
+    <h1 style="text-align:center">Isira</h1>
+</head>
+<body>
+    <h3 style="margin-top:100px;text-align:center">Monthly Revenue: &#8377; {{ revenue }}</h3>
+    <div>
+        <h4 style="float:left;margin-left:100px">Cakes Revenue: &#8377; {{ cake_revenue }}</h4>
+        <h4 style="float:right;margin-right:100px">Breads Revenue: &#8377; {{ breads_revenue }}</h4>
+    </div>
+    <div style="margin-top:100px">
+        <h4 style="float:left;margin-left:100px">Savoury Items Revenue: &#8377; {{ savoury_revenue }}</h4>
+        <h4 style="float:right;margin-right:100px">More Items Revenue: &#8377; {{ more_revenue }}</h4>
+    </div>
+    <div style="margin-top:200px">
+        <p style="float:left;margin-left:100px">Date of generation: {{ date }}</p>
+        <p style="float:right;margin-right:100px">Time of generation: {{ time }}</p>
+    </div>
+</body>
+</html>

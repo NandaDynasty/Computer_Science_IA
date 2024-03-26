@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Monthly Revenue</title>
+  <style>
+    body {
+      text-align: center;
+      background-image: url('{{url_for('static', filename='bgimg.jpg')}}');
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+    }
+
+    h1, h2 {
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: 0px;
+    }
+
+    .logo {
+      width: 75px;
+      height: 75px;
+    }
+
+    .title {
+      margin-top: 0px;
+    }
+
+    .nav {
+      margin-top: 0px;
+    }
+
+    .nav a {
+      color: black;
+      text-decoration: none;
+      margin: 0 20px;
+    }
+
+    .nav a:hover {
+      text-decoration: underline;
+    }
+
+    .content-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 50px;
+    }
+
+    .circle {
+      width: 300px;
+      height: 300px;
+      border: 15px solid black;
+      border-radius: 50%;
+      background: transparent;
+    }
+
+    .categories-container {
+      display: flex;
+      flex-direction: column;
+      margin-left: 20px;
+    }
+
+    .category {
+      width: 100%; /* Adjust the width as needed */
+      margin-bottom: 20px; /* Adjust the margin as needed */
+      margin-left: 100px;
+      text-align: center;
+    }
+
+    .category h3 {
+      font-weight: bold;
+    }
+
+    .category-value {
+      margin-top: 10px;
+    }
+
+    .filter-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: -20px; /* Add margin to separate from other elements */
+    }
+
+    .filter-container h3 {
+      margin-right: 10px; /* Adjust margin between h3 and select */
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <a href="{{ url_for('static', filename='isira.jpeg') }}"><img src="{{ url_for('static', filename='isira.jpeg') }}" alt="Logo" class="logo"></a>
+    <h1 class="title">Isira</h1>
+    <div class="nav">
+      <a href="addingredient">Add Ingredient</a>
+      <a href="/newitem">New Product</a>
+      <a href="deleteitem">Delete Product</a>
+      <a href="/admin">Home</a>
+      <a href="/logout">Log Out</a>
+    </div>
+  </div>
+
+  <h1>Monthly Revenue</h1>
+
+  <form action="/update_revenue" style="text-align:left;margin-right:auto" method="post">
+    <div class="filter-container" style="margin-right:20px">
+      <h3>Choose a month: </h3>
+      <select name="month_choice" id="monthSelect">
+        <option>January</option>
+        <option>February</option>
+        <option>March</option>
+        <option>April</option>
+        <option>May</option>
+        <option>June</option>
+        <option>July</option>
+        <option>August</option>
+        <option>September</option>
+        <option>October</option>
+        <option>November</option>
+        <option>December</option>
+      </select>
+    </div>
+    <div class="filter-container">
+      <h3>Choose a year:</h3>
+      <select name="year_choice" id="yearSelect">
+        <option>2023</option>
+        <option>2024</option>
+      </select>
+    </div>
+    <button type="submit" style="margin-left:50px;margin-top:10px">Filter</button>
+  </form>
+
+  <div class="content-container">
+    <div class="circle">
+      <h1 style="margin-top:125px">₹ {{ revenue }}</h1>
+    </div>
+    <div class="categories-container">
+      <div class="category">
+        <h3>Breads</h3>
+        <div class="category-value">₹ {{ breads_revenue }}</div>
+      </div>
+      <div class="category">
+        <h3>Cakes</h3>
+        <div class="category-value">₹ {{ cakes_revenue }}</div>
+      </div>
+      <div class="category">
+        <h3>More Items</h3>
+        <div class="category-value">₹ {{ more_items_revenue }}</div>
+      </div>
+      <div class="category">
+        <h3>Savoury Items</h3>
+        <div class="category-value">₹ {{ savoury_items_revenue }}</div>
+      </div>
+    </div>
+  </div>
+  <form action="/generate_pdf" method="post">
+    <button type="submit" style="width:200px;height:50px">Export Current Month's Revenue to PDF</button>
+  </form>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var currentDate = new Date();
+      var currentMonth = currentDate.toLocaleString('default', { month: 'long' });
+      var currentYear = currentDate.getFullYear();
+      var monthSelect = document.getElementById('monthSelect');
+      var yearSelect = document.getElementById('yearSelect');
+
+      // Set the default selected month
+      for (var i = 0; i < monthSelect.options.length; i++) {
+        if (monthSelect.options[i].value === currentMonth) {
+          monthSelect.options[i].selected = true;
+          break;
+        }
+      }
+
+      // Set the default selected year
+      for (var i = 0; i < yearSelect.options.length; i++) {
+        if (parseInt(yearSelect.options[i].value) === currentYear) {
+          yearSelect.options[i].selected = true;
+          break;
+        }
+      }
+    });
+  </script>
+</body>
+</html>

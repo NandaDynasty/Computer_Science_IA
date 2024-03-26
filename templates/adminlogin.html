@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <style>
+        body {
+            background-color: purple;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-box {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            width: 80%;
+            max-width: 400px;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .login-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .signup-link {
+            text-decoration: none;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h2>Admin Login</h2>
+        <form method="post" action="/adminlogin">
+            <input type="text" name="email" placeholder="Email Address" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button class="login-button" type="submit">Log In</button>
+        </form>
+        <p><a class="signup-link" href="/login">User Login</a></p>
+    </div>
+
+    <script>
+        function validateForm() {
+            var email = document.querySelector('input[name="email"]').value;
+            var password = document.querySelector('input[name="password"]').value;
+
+            if (email === '' || password === '') {
+                alert('Please fill in all required fields.');
+                return false;
+            }
+
+            if (!isValidEmail(email)) {
+                alert('Please enter a valid email address.');
+                return false;
+            }
+
+            return true;
+        }
+
+        function isValidEmail(email) {
+            var emailPattern = /^\S+@\S+\.\S+$/;
+            return emailPattern.test(email);
+        }
+    </script>
+</body>
+</html>

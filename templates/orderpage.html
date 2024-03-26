@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Online Store</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('{{url_for('static', filename='bgimg.jpg')}}');
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .logo img {
+            display: block;
+        }
+
+        .links a {
+            margin-right: 30px;
+            color: black;
+            text-decoration: none;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            display: flex;
+            margin-top: 20px;
+        }
+
+        .items-list {
+            margin-left: 30px;
+            width: 50%;
+        }
+
+        .items-list h2 {
+            margin-top: 0;
+        }
+
+        .items-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .items-list li {
+            font-size: 130%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .counter {
+            display: flex;
+            align-items: center;
+        }
+
+        .counter button {
+            margin: 0 5px;
+            padding: 3px 5px;
+            font-weight: bold;
+        }
+
+        .cart {
+            width: 50%;
+            padding-left: 20px;
+        }
+
+        .cart table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .cart th,
+        .cart td {
+            padding: 5px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        #place-order-button {
+            display: block;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #place-order-button:hover {
+            background-color: #45a049;
+        }
+
+        #cart-items td:first-child {
+            font-weight: bold;
+        }
+
+        .menu {
+            margin: 20px;
+            padding: 0;
+            list-style-type: none;
+        }
+
+        .menu li {
+            font-size: 130%;
+            margin-bottom: 10px;
+        }
+
+        .menu li span {
+            margin-left: 10px;
+        }
+
+        .product-image-container {
+            text-align: center;
+        }
+
+        .product-image-container img {
+            width: 200px;
+            height: 150px;
+        }
+
+        i:hover{
+            cursor:pointer;
+        }
+
+        .modal {
+            display: block;
+            position: fixed;
+            z-index: 1000;
+            left: 400px;
+            top: 180px;
+            width: 45%;
+            height: 35%;
+            overflow: auto;
+            background-color: rgba(220, 220, 220, 1) ;
+            padding-: 10px;
+            text-align:center;
+            justify-content:center;
+            border-radius:25px;
+        }
+
+        .modal img {
+            margin-top:20px;
+            width:100px;
+            height:75px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: black;
+            float: right;
+            margin:10px;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* semi-transparent black background */
+            z-index: 999; /* ensure the overlay is above other elements */
+        }
+    </style>
+</head>
+<body style="background-image: url('{{url_for('static', filename='bgimg.jpg')}}')">
+
+<nav class="navbar">
+    <div class="logo">
+        <a href="{{ url_for('static', filename='isira.jpeg') }}"><img src="{{ url_for('static', filename='isira.jpeg') }}" alt="Logo" width="75px" height="75px"></a>
+    </div>
+    <h1 style="font-family:'Courier New'">Isira</h1>
+    <div class="links">
+        <a href="/logout">Log Out</a>
+        <a href="/profile">My Account</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="items-list">
+        <h2>
+            Cakes
+            <span class="section-arrow"><i class="fas fa-chevron-down"></i></span>
+        </h2>
+        <ul id="cakes-menu"></ul>
+
+        <h2>
+            Breads
+            <span class="section-arrow"><i class="fas fa-chevron-down"></i></span>
+        </h2>
+        <ul id="breads-menu"></ul>
+
+        <h2>
+            More Items
+            <span class="section-arrow"><i class="fas fa-chevron-down"></i></span>
+        </h2>
+        <ul id="more-items-menu"></ul>
+
+        <h2>
+            Savoury Items
+            <span class="section-arrow"><i class="fas fa-chevron-down"></i></span>
+        </h2>
+        <ul id="savoury-items-menu"></ul>
+    </div>
+
+    <div class="cart">
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody id="cart-items">
+            </tbody>
+        </table>
+        <div id="total-price">Total Price: Rs. 0.00</div>
+        <button id="place-order-button">Place Order</button>
+    </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<script>
+    var cartItems = {};
+    var totalPrice = 0;
+
+    function incrementCounter() {
+        var countElement = this.parentNode.querySelector('.count');
+        var count = parseInt(countElement.innerText);
+        var price = parseFloat(this.parentNode.parentNode.querySelector('.item-name').innerText.split(' - Rs.')[1]);
+        var itemNameElement = this.closest('li').querySelector('.item-name');
+        var itemName = itemNameElement.innerText.split(' - Rs.')[0];
+        var sectionId = this.closest('ul').id; // Get the ID of the associated section
+        var type;
+
+        switch (sectionId) {
+            case 'cakes-menu':
+                type = 'cake';
+                break;
+            case 'breads-menu':
+                type = 'bread';
+                break;
+            case 'more-items-menu':
+                type = 'more';
+                break;
+            case 'savoury-items-menu':
+                type = 'savoury';
+                break;
+            default:
+                type = ''; // Handle other cases as needed
+                break;
+        }
+
+        if (['more', 'savoury', 'bread'].includes(type)) {
+            var stock = parseInt(this.closest('li').querySelector('.product-stock').innerText.match(/\d+/)[0]);
+            if (count < stock) {
+                count++;
+                countElement.innerText = count;
+
+                totalPrice += price;
+                updateTotalPrice();
+
+                if (!cartItems[itemName]) {
+                    cartItems[itemName] = { quantity: count, price: price };
+                    var newRow = document.createElement('tr');
+                    newRow.innerHTML = '<td>' + itemName + '</td><td>' + count + '</td>';
+                    document.getElementById('cart-items').appendChild(newRow);
+                } else {
+                    var cartRow = document.getElementById('cart-items').getElementsByTagName('tr');
+                    for (var i = 0; i < cartRow.length; i++) {
+                        if (cartRow[i].getElementsByTagName('td')[0].innerText === itemName) {
+                            cartRow[i].getElementsByTagName('td')[1].innerText = count;
+                            cartItems[itemName].quantity = count;
+                            break;
+                        }
+                    }
+                }
+            } else {
+                alert('Cannot add more than ' + stock + ' unit(s) of ' + itemName);
+            }
+        } else {
+
+            count++;
+            countElement.innerText = count;
+
+            totalPrice += price;
+            updateTotalPrice();
+
+            if (!cartItems[itemName]) {
+                cartItems[itemName] = { quantity: count, price: price };
+                var newRow = document.createElement('tr');
+                newRow.innerHTML = '<td>' + itemName + '</td><td>' + count + '</td>';
+                document.getElementById('cart-items').appendChild(newRow);
+            } else {
+                var cartRow = document.getElementById('cart-items').getElementsByTagName('tr');
+                for (var i = 0; i < cartRow.length; i++) {
+                    if (cartRow[i].getElementsByTagName('td')[0].innerText === itemName) {
+                        cartRow[i].getElementsByTagName('td')[1].innerText = count;
+                        cartItems[itemName].quantity = count;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    function decrementCounter() {
+        var countElement = this.parentNode.getElementsByClassName('count')[0];
+        var count = parseInt(countElement.innerText);
+        var price = parseFloat(this.parentNode.parentNode.getElementsByClassName('item-name')[0].innerText.split(' - Rs.')[1]);
+        var itemName = this.closest('li').querySelector('.item-name').innerText.split(' - Rs.')[0];
+
+
+
+        if (count > 0) {
+            count--;
+            countElement.innerText = count;
+
+            totalPrice -= price;
+            updateTotalPrice();
+
+            if (count === 0) {
+                var cartRow = document.getElementById('cart-items').getElementsByTagName('tr');
+                for (var i = 0; i < cartRow.length; i++) {
+                    if (cartRow[i].getElementsByTagName('td')[0].innerText === itemName) {
+                        document.getElementById('cart-items').removeChild(cartRow[i]);
+                        delete cartItems[itemName];
+                        break;
+                    }
+                }
+            } else {
+                var cartRow = document.getElementById('cart-items').getElementsByTagName('tr');
+                for (var i = 0; i < cartRow.length; i++) {
+                    if (cartRow[i].getElementsByTagName('td')[0].innerText === itemName) {
+                        cartRow[i].getElementsByTagName('td')[1].innerText = count;
+                        cartItems[itemName].quantity = count;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    function updateTotalPrice() {
+        document.getElementById('total-price').innerText = 'Total Price: Rs. ' + totalPrice.toFixed(2);
+    }
+
+    function toggleSection(sectionId, arrowElement) {
+        var sectionList = document.getElementById(sectionId);
+        if (sectionList.style.display === "none") {
+            sectionList.style.display = "block";
+            arrowElement.classList.remove("fa-chevron-down");
+            arrowElement.classList.add("fa-chevron-up");
+        } else {
+            sectionList.style.display = "none";
+            arrowElement.classList.remove("fa-chevron-up");
+            arrowElement.classList.add("fa-chevron-down");
+        }
+    }
+
+    function updateEventListeners() {
+        var plusButtons = document.getElementsByClassName('plus-button');
+        var minusButtons = document.getElementsByClassName('minus-button');
+
+        for (var i = 0; i < plusButtons.length; i++) {
+            plusButtons[i].addEventListener('click', incrementCounter);
+        }
+
+        for (var i = 0; i < minusButtons.length; i++) {
+            minusButtons[i].addEventListener('click', decrementCounter);
+        }
+    }
+
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var cakesMenu = document.getElementById('cakes-menu');
+        var breadsMenu = document.getElementById('breads-menu');
+        var moreItemsMenu = document.getElementById('more-items-menu');
+        var savouryItemsMenu = document.getElementById('savoury-items-menu');
+
+        function showProductImage(imageLink, details) {
+
+            var overlay = document.getElementById("overlay");
+            overlay.style.display = "block";
+
+            var imageContainer = document.createElement("div");
+            imageContainer.className = "modal";
+
+            var productImage = document.createElement("img");
+            productImage.src = imageLink;
+            productImage.width = 200;
+            productImage.height = 150;
+
+            var closeButton = document.createElement('span');
+            closeButton.className = 'close';
+            closeButton.innerHTML = '&times;';
+            closeButton.onclick = function() {
+                imageContainer.style.display = "none";
+                overlay.style.display = "none";
+            };
+
+            var productDetails = document.createElement('p');
+            productDetails.innerHTML = details;
+            productDetails.style.color = "Red";
+
+            imageContainer.appendChild(closeButton)
+            imageContainer.appendChild(productImage);
+            imageContainer.appendChild(productDetails);
+
+            return imageContainer;
+        }
+
+        function toggleSection(sectionList, arrowElement) {
+            if (sectionList.style.display === "none" || sectionList.style.display === "") {
+                sectionList.style.display = "block";
+                arrowElement.classList.remove("fa-chevron-down");
+                arrowElement.classList.add("fa-chevron-up");
+            } else {
+                sectionList.style.display = "none";
+                arrowElement.classList.remove("fa-chevron-up");
+                arrowElement.classList.add("fa-chevron-down");
+            }
+        }
+
+        fetch('/menu')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(product => {
+                    var li = document.createElement('li');
+                    if (['Bread', 'Savoury', 'More'].includes(product.type)) {
+                        li.innerHTML = '<span class="item-name">' + product.name + ' - Rs. ' + product.price + '</span>' +
+                                       '<span class="product-stock" style="margin-left:auto;font-size:80%"> (Stock: ' + product.stock + ')</span>' +
+                                       '<span class="product-arrow" style="margin-left:auto;margin-right:50px"><i class="fa fa-info-circle"></i></span>' +
+                                       '<button class="minus-button">-</button>' +
+                                       '<span class="count">0</span>' +
+                                       '<button class="plus-button">+</button>' +
+                                       '</div>';
+                    } else {
+                        // If not relevant, create the list item without stock info
+                        li.innerHTML = '<span class="item-name">' + product.name + ' - Rs. ' + product.price + '</span>' +
+                                       '<span class="product-arrow" style="margin-left:auto;margin-right:50px"><i class="fa fa-info-circle"></i></span>' +
+                                       '<button class="minus-button">-</button>' +
+                                       '<span class="count">0</span>' +
+                                       '<button class="plus-button">+</button>' +
+                                       '</div>';
+                    }
+
+                    // Append the item to the corresponding section
+                    switch (product.type) {
+                        case 'Cake':
+                            cakesMenu.appendChild(li);
+                            break;
+                        case 'Bread':
+                            breadsMenu.appendChild(li);
+                            break;
+                        case 'More':
+                            moreItemsMenu.appendChild(li);
+                            break;
+                        case 'Savoury':
+                            savouryItemsMenu.appendChild(li);
+                            break;
+                        default:
+                            break;
+                    }
+
+                    // Add click event listener to the product arrow
+                    var productArrow = li.querySelector(".product-arrow");
+                    var productImageContainer;
+                    productArrow.addEventListener('click', function() {
+                        var itemContainer = productArrow.parentElement;
+                        var productName = itemContainer.querySelector(".item-name").innerText;
+
+                        if (!productImageContainer) {
+                            productImageContainer = showProductImage(product.imageLink, product.details);
+                            li.appendChild(productImageContainer);
+                        } else {
+                            li.removeChild(productImageContainer);
+                            productImageContainer = null;
+                        }
+                    });
+                });
+
+                updateEventListeners();
+
+                // Add click event listeners to the section headers
+                document.querySelectorAll(".items-list h2").forEach(header => {
+                    var arrowElement = header.querySelector(".section-arrow i");
+                    var sectionId = header.nextElementSibling.id;
+                    header.addEventListener('click', function() {
+                        var sectionList = document.getElementById(sectionId);
+                        toggleSection(sectionList, arrowElement);
+                    });
+                });
+            })
+            .catch(error => console.error('Error fetching products:', error));
+    });
+
+    document.getElementById("place-order-button").addEventListener("click", function() {
+        // Show a confirmation dialog
+        var confirmation = confirm("Total Price: Rs. " + totalPrice.toFixed(2) + "\nDo you want to place the order?");
+
+        if (confirmation) {
+            var cartData = [];
+            var table = document.getElementById("cart-items");
+            var rows = table.getElementsByTagName("tr");
+
+            for (var i = 0; i < rows.length; i++) {
+                var item = rows[i].cells[0].innerText;
+                var quantity = parseInt(rows[i].cells[1].innerText);
+                cartData.push({
+                    "item": item,
+                    "quantity": quantity
+                });
+            }
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/order", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        if (response.success) {
+                            // Redirect to the next page
+                            window.location.href = "/order_success?message=Order%20placed%20successfully";
+                        } else {
+                            console.error("Order processing failed:", response.message);
+                            // Display an error message to the user, if necessary
+                        }
+                    } else {
+                        console.error("Request failed. Status:", xhr.status);
+                        // Display an error message to the user, if necessary
+                    }
+                }
+            };
+            xhr.send(JSON.stringify(cartData));
+        }
+    });
+
+</script>
+
+</body>
+</html>

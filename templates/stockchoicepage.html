@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Welcome to Isira!</title>
+        <div class="menu"><a href="/admin">Back</a></div>
+        <div class="menu"><a href="/logout">Log Out</a></div>
+        <a href="{{ url_for('static', filename='isira.jpeg') }}"><img src="{{ url_for('static', filename='isira.jpeg') }}" alt="Logo" width="75px" height="75px"></a>
+        <style>
+            .menu {
+                float:right;
+                margin:20px;
+            }
+
+            a{
+                color:black;
+                text-decoration:none;
+            }
+
+            a:hover {
+                text-decoration:underline;
+            }
+        </style>
+    </head>
+    <body style="background-image:url('{{url_for('static', filename='bgimg.jpg')}}'); background-size:cover">
+        <div style="width:100%;text-align:center; margin-top:100px;color:black"><h1>Would you like to view the stock of ingredients or products?</h1></div>
+        <a href="/inventory"><button style="width:160px;height:70px;background-color:blue;color:white;margin-left:37%">Ingredients Stock</button></a>
+        <a href="/productstock"><button style="width:160px;height:70px;background-color:blue;color:white">Product Stock</button></a>
+    </body>
+</html>

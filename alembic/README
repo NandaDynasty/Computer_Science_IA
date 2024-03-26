@@ -1,0 +1,12 @@
+Generic single-database configuration - MySQL Workbench 8.0 Community Edition
+Sample User Email: kavyaanand07@gmail.com
+Sample User Password: 123456
+Sample Admin Email: admin@gmail.com
+Sample Admin Password: admin123
+Libraries required:
+ - Flask
+ - alembic
+ - SQLAlchemy
+ - werkzeug
+ - smtplib
+ - mysql-connector-python

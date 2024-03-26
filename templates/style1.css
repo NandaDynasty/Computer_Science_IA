@@ -1,0 +1,31 @@
+body {
+    background-image: url("bgimg.jpg");
+}
+#gtc {
+    background-color: #f44336;
+    width: 400px;
+    height: 175px;
+    margin-left: 150px;
+    font-size: 40px;
+}
+#gtb {
+    background-color: #008CBA;
+    width: 400px;
+    height: 175px;
+    margin-left: 150px;
+    font-size: 40px;
+}
+#gts {
+    background-color: #555555;
+    width: 400px;
+    height: 175px;
+    margin-left: 150px;
+    font-size: 40px;
+}
+#gtm {
+    background-color: #22FF22;
+    width: 400px;
+    height: 175px;
+    margin-left: 150px;
+    font-size: 40px;
+}

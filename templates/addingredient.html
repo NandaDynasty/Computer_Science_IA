@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Item</title>
+    <div class="menu"><a href="/logout">Log Out</a></div>
+    <div class="menu"><a href="/admin">Home</a></div>
+    <div class="menu" id="title"><h1>Isira</h1></div>
+    <a href="{{ url_for('static', filename='isira.jpeg') }}"><img src="{{ url_for('static', filename='isira.jpeg') }}" alt="Logo" width="75px" height="75px"></a>
+    <style>
+        .menu {
+            float:right;
+            margin:20px;
+        }
+
+        a{
+            color:black;
+            text-decoration:none;
+
+        }
+
+        a:hover{
+            text-decoration:underline;
+        }
+
+        #title {
+            margin-right: 300px;
+            margin-top: 0px;
+            color:black;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body style="background-image:url('{{url_for('static', filename='bgimg.jpg')}}')">
+
+    <h1 style="text-align:center">Create Item</h1>
+
+    <form method="post" style="width:100%;text-align: center;margin-top:40px" onsubmit="return validateForm()" enctype="multipart/form-data">
+
+      <p><label style="font-size: 150%;margin:0 10px">Ingredient name: </label><input type="text" style="margin-bottom:50px" name="ingredient_name"></p>
+      <p><label style="font-size: 150%;margin:0 10px">Current Quantity: </label><input type="text" style="margin-bottom:50px" name="current_quantity" placeholder="Cake, Bread, Savoury or More"></p>
+      <p><label style="font-size: 150%; margin: 0 10px">Reorder Quantity: </label><input type="type" style="margin-bottom: 50px" name="reorder_quantity"></p>
+      <p><label style="font-size: 150%;margin:0 10px">Price of the ingredient: </label><input type="text" name="ingredient_price"></p>
+
+      <div class="button-container" style="margin-top:70px">
+        <button type="submit" style="margin-top:20px;width:125px;height:50px;background-color: black;color:white;border-radius:25px">Add Ingredient</button>
+      </div>
+    </form>
+</body>
+</html>

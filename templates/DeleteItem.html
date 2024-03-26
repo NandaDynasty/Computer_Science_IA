@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Item</title>
+    <a href="{{ url_for('static', filename='isira.jpeg') }}"><img src="{{ url_for('static', filename='isira.jpeg') }}" alt="Logo" width="75px" height="75px"></a>
+</head>
+<body style="background-image:url('{{url_for('static', filename='bgimg.jpg')}}')">
+
+    <h1 style="text-align:center">Delete Item</h1>
+
+    <form method="post" style="width:100%;text-align: center;margin-top:100px" onsubmit="return validateForm()" enctype="multipart/form-data">
+
+      <p><label style="font-size: 150%;margin:0 10px">Product name: </label><input type="text" style="margin-bottom:50px" name="product_name"></p>
+
+      <div class="button-container" style="margin-top:70px">
+        <button type="submit" style="margin-top:20px;width:125px;height:50px;background-color: black;color:white;border-radius:25px">Delete</button>
+      </div>
+    </form>
+</body>
+</html>

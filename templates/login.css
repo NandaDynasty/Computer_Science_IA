@@ -1,0 +1,59 @@
+body {
+    margin:50px 0px; padding:0px;
+    text-align: center;
+    background-image: url("loginbg.jpeg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.rst {
+    width:80px;
+    height:40px;
+    margin-top:20px;
+    margin-right:500px;
+}
+.sbmt {
+    width:80px;
+    height:40px;
+    margin-top:20px;
+    margin-right:500px;
+}
+
+.sui{
+    width:150px;
+    height:40px;
+    margin-top:20px;
+    margin-right:500px;
+}
+div {
+    margin-left:500px;
+}
+
+label {
+    float:left;
+    margin-right:0px;
+}
+
+#password{
+    position:relative;
+    margin-right:475px;
+    margin-top:7px;
+}
+
+#email{
+    position:relative;
+    margin-right:520px;
+    margin-top:7px;
+}
+
+.name{
+    position:relative;
+    margin-right:440px;
+    margin-top:7px;
+}
+
+#logo {
+    height: 75px;
+    width: 75px;
+    float:left;
+    margin-left:40px;
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Account</title>
+  <style>
+
+  </style>
+</head>
+<body style="background-image: url('bgimg.jpg')">
+
+  <div class="logo">
+    <a href="{{ url_for('static', filename='isira.jpeg') }}"><img src="{{ url_for('static', filename='isira.jpeg') }}" alt="Logo" width="75px" height="75px"></a>
+  </div>
+
+  <h1 style="text-align:center">Your Profile</h1>
+
+  <form method="post" style="text-align:center" onsubmit="return validateForm()" action="/profile">
+    <p><label>First Name: </label><span id="firstnameSpan">{{ fname }}</span><input type="text" name="firstname" id="firstnameInput" value="{{ fname }}" style="display: none;"></p>
+    <p><label>Last Name: </label><span id="lastnameSpan">{{ lname }}</span><input type="text" name="lastname" id="lastnameInput" value="{{ lname }}" style="display: none;"></p>
+    <p><label>Email: </label><span id="emailSpan">{{ email }}</span><input type="text" name="email" id="emailInput" value="{{ email }}" style="display: none;"></p>
+    <p><label>Phone Number: </label><span id="numberSpan">{{ phoneno }}</span><input type="text" name="number" id="numberInput" value="{{ phoneno }}" style="display: none;"></p>
+    <p><label>Address: </label><span id="addressSpan">{{ address }}</span><input type="text" name="address" id="addressInput" value="{{ address }}" style="display: none;"></p>
+    <p><label>Password: </label><span id="passwordSpan">******</span><input type="password" name="password" id="passwordInput" value="{{ pword }}" style="display: none;"></p>
+    <p><label>Confirm Password: </label><span id="confirmSpan">******</span><input type="password" name="confirm" id="confirmInput" value="{{ pword }}" style="display: none;"></p>
+    <input type="button" value="Edit" onclick="enableEdit()" style="display: block; margin-top: 20px; padding: 10px; background-color: #4caf50; color: white;margin-left:650px">
+    <input type="submit" value="Save Changes" style="display: none; margin-top: 20px; padding: 10px; background-color: #4caf50; color: white;margin-left:620px">
+  </form>
+
+  <div style="text-align:center;">
+    <a href="/myorders"><button style="width:100px;height:50px;margin-left:75px;margin-top:30px;background-color:#4caf50;color:white">My Orders</button></a>
+  </div>
+
+  <script>
+    function enableEdit() {
+      document.getElementById("firstnameInput").style.display = "inline-block";
+      document.getElementById("lastnameInput").style.display = "inline-block";
+      document.getElementById("emailInput").style.display = "inline-block";
+      document.getElementById("numberInput").style.display = "inline-block";
+      document.getElementById("addressInput").style.display = "inline-block";
+
+      document.getElementById("passwordInput").style.display = "inline-block";
+      document.getElementById("passwordInput").value = "{{ pword }}"; // Set the value from the hidden field
+      document.getElementById("confirmInput").style.display = "inline-block";
+      document.getElementById("confirmInput").value = "{{ pword }}"; // Set the value from the hidden field
+
+      document.getElementById("firstnameSpan").style.display = "none";
+      document.getElementById("lastnameSpan").style.display = "none";
+      document.getElementById("emailSpan").style.display = "none";
+      document.getElementById("numberSpan").style.display = "none";
+      document.getElementById("addressSpan").style.display = "none";
+      document.getElementById("passwordSpan").style.display = "none";
+      document.getElementById("confirmSpan").style.display = "none";
+
+      // Show the "Save Changes" button and hide the "Edit" button
+      document.querySelector("input[type='submit']").style.display = "block";
+      document.querySelector("input[type='button']").style.display = "none";
+    }
+
+    function validateForm() {
+      document.getElementById("password").value = document.getElementById("passwordInput").value;
+      document.getElementById("confirm").value = document.getElementById("confirmInput").value;
+      if (document.getElementById("firstnameInput").value === '' || document.getElementById("lastnameInput").value === '' || document.getElementById("emailInput").value === '' || document.getElementById("numberInput").value === '' || document.getElementById("addressInput").value === '' || document.getElementById("passwordInput").value === '' || document.getElementById("confirmInput").value === ''){
+        alert ('Please fill in all fields');
+        return false;
+      }
+      if (document.getElementById('emailInput').value.indexOf('@') === -1) {
+        alert ('Please enter a valid email');
+        return false;
+      }
+      if (document.getElementById('passwordInput').value !== document.getElementById('confirmInput').value){
+        alert ('Passwords do not match');
+        return false;
+      }
+      return true;
+    }
+  </script>
+</body>
+</html>
+
+
+
+

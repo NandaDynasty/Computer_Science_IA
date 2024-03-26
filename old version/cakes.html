@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Isira</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body>
+    <div id="header">
+        <img src="isira.jpeg" alt="Isira Logo" width="75" height="75">
+        <div id="header-links">
+            <a href="typeofitemselect.html">Home</a>
+            <a href="Log-in.html">Log Out</a>
+            <a href="profilepage.html">My Account</a>
+        </div>
+    </div>
+
+    <div id="title">
+        <h1>Isira</h1>
+        <h2>Cakes</h2>
+    </div>
+
+    <div id="content">
+        <div id="item-container">
+            <div class="item-row">
+                <select id="item-select">
+                    <option value="">Select Item</option>
+                    <option value="Red Velvet">Red Velvet</option>
+                    <option value="Biscoff">Biscoff</option>
+                    <option value="Chocolate">Chocolate</option>
+                </select>
+                <input type="number" id="quantity" min="0" placeholder="Quantity">
+                <button id="add-button">+</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="cart">
+        <button id="cart-button">Add to Cart</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
+
+

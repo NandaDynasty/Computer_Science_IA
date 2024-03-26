@@ -1,0 +1,24 @@
+table, th, td {
+    border:1px solid;
+}
+
+div{
+    margin:auto;
+    margin-top:10px;
+}
+
+table {
+    border-collapse:collapse;
+    width:300px;
+}
+
+#logo {
+    height: 75px;
+    width: 75px;
+}
+
+body {
+    background-image: url("bgimg.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
